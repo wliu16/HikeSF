@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}s->a[s{% endblock %}
+
+{% block content %}
+
+  <div class="container" id="main-section">
+    <h2>All footprints</h2>
+      {% if footprints %}
+        <h5 class="search-results">({{ footprints | length }} results)</h5>
+        <div class="row">
+          {% for visit in footprints %}
+              <div class="list-group" id="visit-list">
+                <a href="/trails/{{ visit.trail.trail_id }}" class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      {% if visit.trail.image_url %}
+                        <img class="media-object" src="/{{ visit.trail.image_url }}" alt="Image for {{ visit.trail.name }}">
+                      {% else %}
+                        <img class="media-object" src="/static/img/not_available.jpg" alt="Image for {{ visit.trail.name }}">
+                      {% endif %}
+                    </div>
+                    <div class="media-body">
+                      <h3 class="media-heading">{{ visit.trail.name }}</h3>
+                      <p>
+                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> {{ visit.trail.address }}<br>
+                        <span class="glyphicon glyphicon-road" aria-hidden="true"></span> {{ visit.trail.distance }} Miles. {{ visit.trail.trail_type }} Trail <br>
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{ visit.visit_date }}
+                      </p>
+                    </div>
+                  </div><!-- /.media -->            
+                </a>
+              </div><!-- /.list-group -->
+          {% endfor %}
+        </div><!-- /.row -->
+      {% else %}
+        <div class="row">
+          <h5>(0 results)</h5>
+        </div><!-- /.row -->
+      {% endif %}
+  </div><!-- /.container -->
+
+{% endblock %}

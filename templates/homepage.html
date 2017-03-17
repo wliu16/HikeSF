@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block content %}
+  <div class="jumbotron" id="cover">
+    <div class="container">
+      <h1>HikeSF</h1>
+      <p class="site-description indent">
+        Search Trails in San Francisco
+        <br>
+        Remember your hiking and share with your friends!
+      </p>
+      <p class="indent">
+        <a class="btn btn-primary btn-lg btn-homepage btn-font" href="/signup" role="button"><span class="fa fa-pencil" aria-hidden="true"></span> Sign up</a>
+        <a class="btn btn-primary btn-lg btn-homepage btn-font" href="/login" role="button"><span class="fa fa-sign-in" aria-hidden="true"></span> Login</a>
+      </p>
+    </div><!-- /.container -->
+  </div><!-- /.jumbotron -->
+
+  <div class="container" id="features-section">
+    <h2>Features</h2>
+    <div class="row">
+       <div class="col-xs-12 col-md-4">
+        <span class="fa-stack fa-3x features-icon">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-search fa-stack-1x fa-inverse"></i>
+        </span>
+        <h3>Search Trails</h3>
+        <p>Search information for all trails in San Francisco. Choose what you like and go hiking! </p>
+      </div>
+      <div class="col-xs-12 col-md-4">
+        <span class="fa-stack fa-3x features-icon">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-check fa-stack-1x fa-inverse"></i>
+        </span>
+        <h3>Check In</h3>
+        <p>Check in for trails. Remember where you have been! </p>
+      </div>
+      <div class="col-xs-12 col-md-4">
+        <span class="fa-stack fa-3x features-icon">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-user-plus fa-stack-1x fa-inverse"></i>
+        </span>
+        <h3>Connect With Friends</h3>
+        <p>Search and connect with your friends. Share activities with each other! </p>
+      </div>
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+{% endblock %}

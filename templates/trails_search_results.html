@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Trails: Search Results{% endblock %}
+
+{% block content %}
+
+  <div class="container" id="main-section">
+    <h2>Trails</h2>
+    {% if search_results %}
+      <h5 class="search-results">({{ search_results | length }} results)</h5>
+      <div class="row">
+        {% for trail in search_results %}
+            <div class="list-group" id="trail-list">
+              <a href="/trails/{{ trail.trail_id }}" class="list-group-item">
+                <div class="media">
+                  <div class="media-left">
+                    {% if trail.image_url %}
+                      <img class="media-object" src="/{{ trail.image_url }}" alt="Image for {{ trail.name }}">
+                    {% else %}
+                      <img class="media-object" src="/static/img/not_available.jpg" alt="Image for {{ trail.name }}">
+                    {% endif %}
+                  </div><!-- /.media-left --> 
+                  <div class="media-body">
+                    <h3 class="media-heading">{{ trail.name }}</h3>
+                    <p>
+                      <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> {{ trail.address }}<br>
+                      <span class="glyphicon glyphicon-road" aria-hidden="true"></span> {{ trail.distance }} Miles. {{ trail.trail_type }} Trail
+                    </p>
+                  </div><!-- /.media-body -->  
+                </div><!-- /.media -->            
+              </a>
+            </div><!-- /.list-group -->
+        {% endfor %}
+      </div><!-- /.row -->
+    {% else %}
+      <div class="row">
+        <p>No results found. Please try again.</p>
+      </div><!-- /.row -->
+    {% endif %}
+  </div><!-- /.container -->
+
+{% endblock %}

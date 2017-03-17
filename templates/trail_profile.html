@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Trail: {{ trail.name }}{% endblock %}
+
+{% block content %}
+
+  <div class="jumbotron top-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-2"  id="trail-profile-pic">
+          {% if trail.image_url %}
+            <img class="img-responsive img-rounded" src="/{{ trail.image_url }}" alt="Image for {{ trail.name }}">
+          {% else %}
+            <img class="img-responsive img-rounded" src="/static/img/not_available.jpg" alt="No image available for {{ trail.name }}">
+          {% endif %}
+        </div><!-- /.col -->
+        <div class="col-xs-12 col-md-6">
+          <h1>{{ trail.name }}</h1>
+          <p>
+            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> {{ trail.address }}<br>
+            <span class="glyphicon glyphicon-road" aria-hidden="true"></span> {{ trail.distance }} Miles. {{ trail.trail_type }} Trail
+          </p>
+        </div><!-- /.col -->
+        <div class="col-xs-12 col-md-4" id="action-box">
+          <!-- Button to add footprint to user's history -->
+          <!-- This is a regular form submit with hidden input -->
+          <form id="leave-footprint" action="/leave-footprint" method="post">
+            <input type="hidden" name="trail_id" value="{{ trail.trail_id }}">
+            <button type="submit" class="btn btn-primary">
+              <span class="fa fa-plus" aria-hidden="true"></span> Leave a footprint</button>
+          </form>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+  </div><!-- /.jumbotron -->
+
+  <div class="container" id="main-section">
+    <div class="row">
+      <h2>Friends Who Left A Footprint</h2>
+      {% if has_friends_visited %}
+        {% for friend in friends %}
+          {% if friend in user_visited %} <!-- friends who visited -->
+            <div class="col-xs-6 col-sm-2" id="user-profile-pic-sm">
+              <a href="/users/{{ friend.user_id }}">
+                {% if friend.profile_pic_url %}
+                  <img class="img-circle img-responsive" src="/{{ friend.profile_pic_url }}">
+                {% else %}
+                  <img class="img-circle img-responsive" src="/static/img/not_available.jpg">
+                {% endif %}
+                {{ friend.first_name }} {{ friend.last_name }}
+              </a>
+            </div><!-- /.col -->
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <p>None of your friends have left a footprint for this trail.</p>
+      {% endif %}
+    </div><!-- /.row -->
+    <hr>
+    <div class="row">
+      <h2>Trail Photos</h2>
+      {% if trail.trail_id % 3 == 0 %}
+        <div class="col-xs-6 col-md-3">
+          <a class="thumbnail">
+            <img src="/static/img/trail1.jpg" alt="...">
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a class="thumbnail">
+            <img src="/static/img/trail2.jpg" alt="...">
+          </a>
+        </div>
+      {% elif trail.trail_id % 3 == 1 %}
+        <div class="col-xs-6 col-md-3">
+          <a class="thumbnail">
+            <img src="/static/img/trail3.jpg" alt="...">
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a class="thumbnail">
+            <img src="/static/img/trail4.jpg" alt="...">
+          </a>
+        </div>
+      {% elif trail.trail_id % 3 == 2 %}
+        <div class="col-xs-6 col-md-3">
+          <a class="thumbnail">
+            <img src="/static/img/trail5.jpg" alt="...">
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a class="thumbnail">
+            <img src="/static/img/trail6.jpg" alt="...">
+          </a>
+        </div>
+      {% else %}
+        <p>No photos have been uploaded for this trail. Be the first!</p>
+      {% endif %}
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+  
+
+{% endblock %}

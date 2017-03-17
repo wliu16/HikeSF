@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.first_name }}{% endblock %}
+
+{% block content %}
+  <div class="jumbotron top-header" id="user-info" data-userid="{{ user.user_id }}">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-2">
+          {% if user.profile_pic_url %}
+            <img class="img-circle img-responsive" src="/{{ user.profile_pic_url }}">
+          {% else %}
+            <img class="img-circle img-responsive" src="/static/img/not_available.jpg">
+          {% endif %}
+        </div><!-- /.col -->
+        <div class="col-xs-12 col-md-6">
+          <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+          <p>
+            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> {{ user.city.name }}
+          </p>
+          <table class="user-stats">
+            <tr>
+              <th class="stats-label">Footprints</th>
+              <th class="stats-label">Friends</th>
+            </tr>
+            <tr>
+              <td class="stats-value">{{ total_footprints }}</td>
+              <td class="stats-value">{{ total_friends }}</td>
+            </tr>
+          </table>
+        </div><!-- /.col -->
+        <div class="col-xs-12 col-md-4" id="action-box">
+          {% if session.current_user.user_id != user.user_id %}
+            {% if friends %}
+              <button class="btn btn-primary disabled" id="accepted-btn"><span class="fa fa-users" aria-hidden="true"></span> Friends</button>
+            {% elif pending_request %}
+              <button class="btn btn-primary disabled" id="requested-btn"><span class="fa fa-clock-o" aria-hidden="true"></span> Request Sent</button>
+            {% else %}
+              <form id="add-friend-form" action="/add-friend" method="post">
+                <button type="submit" class="btn btn-primary" id="add-friend-btn"><span class="fa fa-user-plus" aria-hidden="true"></span> Add Friend</button>
+              </form>
+            {% endif %}
+          {% endif %}
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+  </div><!-- /.jumbotron -->
+
+  <div class="container" id="main-section">
+    <div class="row">
+      <h2>Footprints</h2>
+      <div class="col-xs-12 col-md-8" id="map">
+      </div>
+      <div class="col-xs-12 col-md-4">
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">
+            <h3>Recent Footprints</h3>
+          </div>
+
+          <!-- List group -->
+          {% if recent_footprints %}
+            <div class="list-group">
+              {% for visit in recent_footprints %}
+                <a href="/trails/{{ visit.trail.trail_id }}" class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      {% if visit.trail.image_url %}
+                        <img class="media-object" src="/{{ visit.trail.image_url }}" alt="Image for {{ visit.trail.name }}">
+                      {% else %}
+                        <img class="media-object" src="/static/img/not_available.jpg" alt="Image for {{ visit.trail.name }}">
+                      {% endif %}
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">{{ visit.trail.name }}</h4>
+                      <p>
+                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> {{ visit.trail.address }}
+                        <br>
+                        <span class="glyphicon glyphicon-road" aria-hidden="true"></span> {{ visit.trail.distance }} Miles. {{ visit.trail.trail_type }} Trail
+                        <br>
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{ visit.visit_date }}
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              {% endfor %}
+                <a href="/users/{{ user.user_id }}/footprints" class="list-group-item">See all footprints</a>
+            </div>
+          {% else %}
+            <ul class="list-group">
+              <li class="list-group-item">No footprints left yet.</li>
+            </ul>
+          {% endif %}
+        </div><!-- /.panel -->
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+{% endblock %}
+
+{% block javascript %}
+  <script src="/static/js/add-friend.js"></script>
+
+  <!-- Google Maps API -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCghH3Yc_A51fCIKx6b3tC-wr3mNvYif4I&callback=initMap"></script>
+  <script src="/static/js/footprints_map.js"></script>
+{% endblock %}
