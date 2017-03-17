@@ -1,12 +1,15 @@
 # HikeSF
 Python Web Application
 
-HikeSF is a	Web application designed for hikers to search trails, track hiking history and get social connection with friends. 
+Visit by URL: <a href="http://hikesf.herokuapp.com">hikesf.herokuapp.com</a>
 
-It is first version. Currently, it consists 10 trails in SF. I am finding API to retrieve trails info from other websites. 
+Web application designed to search trails, track hiking history and get social connection with friends. 
 
-It has been deployed at <a href="http://hikesf.herokuapp.com">hikesf.herokuapp.com</a>
+Hosted in Heroku, a cloud platform that that offers an efficient and tuned place for building, deploying and scaling web applications
 
+Use Flask as the web Framework,  
+
+Use PostgreSQL as the database
 
 Technologies:
 
