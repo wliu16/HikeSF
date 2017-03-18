@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+
+  <div class="container" id="main-section">
+    <div class="panel panel-default login-signup">
+      <div class="panel-heading">
+        <h1 class="panel-title">sign up</h1>
+      </div><!-- /.panel-heading -->
+      <div class="panel-body">
+        <form action="/signup"onsubmit="return validate_form(this);" method="post">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" name="email" placeholder="email" required autofocus>
+          <label for="password">Password</label>
+          <input type="text" class="form-control" id="password" name="password" placeholder="password" required>
+          <label for="firstname">First Name</label>
+          <input type="text" class="form-control" id="firstname" name="first_name" placeholder="First Name" required>
+          <label for="lastname">Last Name</label>
+          <input type="text" class="form-control" id="lastname" name="last_name" placeholder="Last Name" required>
+          <label for="city">City:</label>
+          <select class="form-control" id="city" name="city">
+            <option value="Berkeley">Berkeley</option>
+            <option value="Daly City">Daly City</option>
+            <option value="Fremont">Fremont</option>
+            <option value="Mountain View">Mountain View</option>
+            <option value="Oakland">Oakland</option>
+            <option value="Palo Alto">Palo Alto</option>
+            <option value="Redwood City">Redwood City</option>
+            <option value="San Francisco">San Francisco</option>
+            <option value="San Jose">San Jose</option>
+            <option value="Sunnyvale">Sunnyvale</option>
+          </select>
+          <br>
+          <button class="btn btn-lg btn-primary btn-block btn-homepage" type="submit"><span class="fa fa-pencil" aria-hidden="true"></span> Signup</button>
+        </form>
+        <br>
+        <p>
+          Already have an account? <a href="/login">Click here to log in</a>
+        </p>      
+      </div><!-- /.panel-body-->
+    </div><!-- /.panel -->
+  </div><!-- /.container -->
+
+{% endblock %}
+
+{% block javascript %}
+  <script type="text/javascript">
+  function validate_email(field)
+  {
+    with (field)
+    {
+      a_index=value.indexOf("@")
+      dot_index=value.lastIndexOf(".")
+      if (a_index<1||dot_index-a_index<2) 
+      {
+        alert("Not a valid email address!");
+        return false
+      }
+      else
+      {
+        return true
+      }
+    }
+  }
+
+  function validate_form(thisform)
+  {
+    with (thisform)
+    {
+      if (validate_email(email)==false)
+      {
+        email.focus();
+        return false
+      }
+    }
+  }
+  </script>
+{% endblock %}
